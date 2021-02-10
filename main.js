@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Tray, Menu, clipboard } = require('electron')
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -12,13 +12,26 @@ function createWindow () {
     win.loadFile('index.html')
 }
 
-app.whenReady().then(createWindow)
-
-app.on('window-all-closed', () => {
+function quitApp(){
     if(process.platform !== 'darwin') {
         app.quit()
     }
+}
+
+let tray = null
+
+app.on('ready', () => {
+    tray = new Tray('./support.png')
+
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Anzeigen', type: 'normal', click: createWindow},
+        { label: 'Beenden',  type: 'normal', click: quitApp}
+    ])
+    tray.setContextMenu(contextMenu)
+    tray.setToolTip('Support')
 })
+
+app.on('window-all-closed', quitApp)
 
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
