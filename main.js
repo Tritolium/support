@@ -1,15 +1,28 @@
-const { app, BrowserWindow, Tray, Menu, clipboard } = require('electron')
+const { app, Tray, Menu } = require('electron')
 
-function createWindow () {
-    const win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true
-        }
+const Window = require('./src/modules/Window')
+
+let mainWindow, dialog, tray
+
+function main () {
+    
+    // create menu in toolbar
+    tray = new Tray('./support.png')
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Anzeigen', type: 'normal', click: openMainWindow},
+        { label: 'Schließen', type: 'normal', click: quitApp}
+    ])
+    tray.setContextMenu(contextMenu)
+    tray.setToolTip('Support')
+    /*let mainWindow = new Window({
+        file: 'index.html'
+    })*/
+}
+
+function openMainWindow(){
+    mainWindow = new Window({
+        file: 'index.html'
     })
-
-    win.loadFile('index.html')
 }
 
 function quitApp(){
@@ -18,23 +31,8 @@ function quitApp(){
     }
 }
 
-let tray = null
-
-app.on('ready', () => {
-    tray = new Tray('./support.png')
-
-    const contextMenu = Menu.buildFromTemplate([
-        { label: 'Anzeigen', type: 'normal', click: createWindow},
-        { label: 'Beenden',  type: 'normal', click: quitApp}
-    ])
-    tray.setContextMenu(contextMenu)
-    tray.setToolTip('Support')
+app.on('window-all-closed', (event) => {
+    event.preventDefault()
 })
 
-app.on('window-all-closed', quitApp)
-
-app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow()
-    }
-})
+app.on('ready', main)
