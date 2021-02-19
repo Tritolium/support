@@ -1,9 +1,12 @@
 const { BrowserWindow } = require('electron')
 
 const defaultProps = {
-    width: 500,
-    heigth: 800,
-    show: false
+    width: 100,
+    height: 100,
+    show: false,
+    webPreferences:{
+        nodeIntegration: true
+    }
 }
 
 class Window extends BrowserWindow {
@@ -11,7 +14,7 @@ class Window extends BrowserWindow {
         super({ ...defaultProps, ...windowSettings })
 
         this.loadFile(file)
-        this.webContents.openDevTools()
+        //this.webContents.openDevTools()
 
         this.once('ready-to-show', () => {
             this.show()
