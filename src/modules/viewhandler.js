@@ -1,11 +1,20 @@
-const { BrowserWindow } = require('electron')
+const { BrowserWindow, Menu } = require('electron')
 const Window = require('./window')
 /**
  * @type {BrowserWindow} reportDialog
  */
-var reportDialog
+var mainWindow, reportDialog
 
 module.exports.ViewHandler = {
+
+    openMainWindow : function(){
+        Menu.setApplicationMenu(null)
+        mainwindow = new Window({
+            height: 310,
+            width: 300,
+            file: require('path').join(__dirname, 'dialogs/index.html')
+        })
+    },
 
     openReportDialog : function(){
         reportDialog = new Window({
@@ -17,7 +26,6 @@ module.exports.ViewHandler = {
     },
 
     closeReportDialog : function(){
-        console.log('close')
         reportDialog.close()
         reportDialog = null
     }

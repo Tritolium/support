@@ -5,6 +5,7 @@ const defaultProps = {
     height: 100,
     show: false,
     webPreferences:{
+        contextIsolation: false,
         nodeIntegration: true
     }
 }

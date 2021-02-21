@@ -4,13 +4,11 @@ const { ViewHandler } = require('./viewhandler')
 
 const url='http://tritol.bplaced.net'
 
-var reportDialog;
-
 ipcMain.on('report_fired', (evt, arg) =>{
     http = new XMLHttpRequest()
     http.onreadystatechange = function() {
-        if(this.readyState == XMLHttpRequest.DONE) {
-            console.log(xhr.response)
+        if(this.readyState == 4) {
+            console.log(this.responseText)
         }
     }
     http.open("POST", url + '/api/ticket/create.php')
