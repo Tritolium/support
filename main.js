@@ -1,7 +1,6 @@
 const { app, Tray, Menu, ipcMain } = require('electron')
 
-const Window = require('./src/modules/Window')
-const ViewHandler = require('./src/modules/viewhandler').ViewHandler
+const { ViewHandler } = require('./src/modules/viewhandler')
 require('./src/modules/eventhandler.js')
 
 let tray
