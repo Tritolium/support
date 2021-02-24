@@ -12,7 +12,7 @@ ipcMain.on('login_fired', (evt, arg) => {
             if(serverresponse == 'login_successful'){
                 ViewHandler.closeLoginDialog()
                 ViewHandler.hideLogin()
-                // TODO save name for ticket
+                require('./eventhandler').EventHandler.user.name = arg.name
             }
             //TODO on login failed info message
         }
@@ -43,6 +43,10 @@ ipcMain.on('report_canceled', () => {
 })
 
 module.exports.EventHandler = {
+    user : {
+        "name": ""
+    },
+
     logout : function(){
         //TODO handle logout with server
     }
