@@ -1,6 +1,7 @@
 const { ipcMain } = require('electron')
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
-const { ViewHandler, MainWindow } = require('./viewhandler')
+const { ViewHandler } = require('./viewhandler')
+const { EventHandler } = require('./eventhandler')
 
 const url='http://tritol.bplaced.net'
 
@@ -9,6 +10,7 @@ ipcMain.on('login_fired', (evt, arg) => {
     http.onreadystatechange = function() {
         if(this.readyState == 4){
             let serverresponse = JSON.parse(this.responseText).response
+            console.log(serverresponse)
             if(serverresponse == 'login_successful'){
                 ViewHandler.closeLoginDialog()
                 ViewHandler.hideLogin()
@@ -35,7 +37,9 @@ ipcMain.on('report_fired', (evt, arg) => {
         }
     }
     http.open("POST", url + '/api/ticket/create.php')
-    http.send(JSON.stringify({'name': arg.name, 'subject': arg.subject, 'message': arg.message}))
+    let outgoing = JSON.stringify({'name': require('./eventhandler').EventHandler.user.name, 'subject': arg.subject, 'message': arg.message})
+    console.log(outgoing)
+    http.send(outgoing)
 })
 
 ipcMain.on('report_canceled', () => {
@@ -43,11 +47,11 @@ ipcMain.on('report_canceled', () => {
 })
 
 module.exports.EventHandler = {
-    user : {
-        "name": ""
-    },
-
     logout : function(){
         //TODO handle logout with server
     }
+}
+
+module.exports.EventHandler.user = {
+    "name" : ""
 }

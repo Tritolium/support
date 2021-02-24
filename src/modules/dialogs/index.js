@@ -17,10 +17,20 @@ function fetchData() {
                 var td_active = document.createElement('td')
                 td_subject.innerHTML = data[i].subject
                 td_message.innerHTML = data[i].message
-                if(data[i].active){
-                    td_active.style.backgroundColor = 'green'
-                } else {
-                    td_active.style.backgroundColor = 'red'
+                console.log(data[i].state)
+                switch(data[i].state){
+                    case '0':
+                        td_active.style.backgroundColor = 'yellow'
+                        break
+                    case '1':
+                        td_active.style.backgroundColor = 'orange'
+                        break
+                    case '2':
+                        td_active.style.backgroundColor ='green'
+                        break
+                    case '3':
+                        td_active.style.backgroundColor = 'red'
+                        break
                 }
                 tr.appendChild(td_subject)
                 tr.appendChild(td_message)

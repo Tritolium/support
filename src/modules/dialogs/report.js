@@ -1,12 +1,9 @@
 const { ipcRenderer } = require('electron')
 
-document.getElementById('fname').value = require('../eventhandler').EventHandler.user.name
-
 document.getElementById('reportform').onsubmit = function (evt) {
-    let name    = document.getElementById('fname').value
     let subject = document.getElementById('fsubject').value
     let message = document.getElementById('fmessage').value
-    ipcRenderer.send('report_fired', {name, subject, message})
+    ipcRenderer.send('report_fired', {subject, message})
 }
 
 function cancel() {

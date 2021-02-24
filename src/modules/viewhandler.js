@@ -65,6 +65,9 @@ module.exports.ViewHandler = {
             width: 300,
             file: require('path').join(__dirname, 'dialogs/index.html')
         })
+        mainWindow.on('closed', () => {
+            mainWindow = null
+        })
     },
 
     reloadMainWindow : function(){
