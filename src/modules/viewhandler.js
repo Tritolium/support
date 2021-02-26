@@ -12,7 +12,7 @@ module.exports.ViewHandler = {
         loginDialog = new Window({
             height: 100,
             width: 300,
-            file: require('path').join(__dirname, 'dialogs/login.html'),
+            file: require('path').join(__dirname, 'dialogs/login/login.html'),
             frame: false
         })
     },
@@ -63,7 +63,7 @@ module.exports.ViewHandler = {
         mainWindow = new Window({
             height: 310,
             width: 300,
-            file: require('path').join(__dirname, 'dialogs/index.html')
+            file: require('path').join(__dirname, 'dialogs/index/index.html')
         })
         mainWindow.on('closed', () => {
             mainWindow = null
@@ -91,7 +91,7 @@ module.exports.ViewHandler = {
         reportDialog = new Window({
             height: 310,
             width: 300,
-            file: require('path').join(__dirname, 'dialogs/report.html'),
+            file: require('path').join(__dirname, 'dialogs/report/report.html'),
             frame: false
         })
     },
