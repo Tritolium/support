@@ -10,7 +10,6 @@ ipcMain.on('login_fired', (evt, arg) => {
     http.onreadystatechange = function() {
         if(this.readyState == 4){
             let serverresponse = JSON.parse(this.responseText).response
-            console.log(serverresponse)
             if(serverresponse == 'login_successful'){
                 ViewHandler.closeLoginDialog()
                 ViewHandler.hideLogin()
@@ -27,12 +26,48 @@ ipcMain.on('login_canceled', () => {
     ViewHandler.closeLoginDialog()
 })
 
+ipcMain.on('open_ticket_editor', (evt, arg) => {
+    ViewHandler.openTicketEditor(arg.target_id)
+})
+
+ipcMain.on('close_ticket_editor', (evt, arg) => {
+    ViewHandler.closeTicketEditor(arg.ticket_id)
+})
+
+ipcMain.on('editor_save_fired', (evt, arg) => {
+    http = new XMLHttpRequest()
+    http.onreadystatechange = function() {
+        if(this.readyState == 4){
+            let serverresponse = JSON.parse(this.responseText).response
+            if(serverresponse == 'update_successful'){
+                ViewHandler.closeTicketEditor(arg.ticket_id)
+                ViewHandler.reloadMainWindow()
+            }
+        }
+    }
+    http.open("PUT", url + '/api/ticket/update.php')
+    http.send(JSON.stringify({'ticket_id': arg.ticket_id, 'message': arg.message, 'state': arg.state}))
+})
+
+ipcMain.on('editor_delete_fired', (evt, arg) => {
+    http = new XMLHttpRequest()
+    http.onreadystatechange = function() {
+        if(this.readyState == 4) {
+            ViewHandler.closeTicketEditor(arg.ticket_id)
+            ViewHandler.reloadMainWindow()
+        }
+    }
+    http.open("DELETE", url + '/api/ticket/delete.php')
+    http.send(JSON.stringify({'ticket_id': arg.ticket_id}))
+})
+
 ipcMain.on('report_fired', (evt, arg) => {
     http = new XMLHttpRequest()
     http.onreadystatechange = function() {
         if(this.readyState == 4) {
             ViewHandler.reloadMainWindow()
             ViewHandler.closeReportDialog()
+            //TODO handle incomplete data
             console.log(this.responseText)
         }
     }

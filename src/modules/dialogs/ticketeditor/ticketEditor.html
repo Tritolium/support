@@ -5,12 +5,19 @@
     </head>
     <body>
         <form>
-            <p>show user</p>
-            <p>show subject</p>
-            <p>texteditor for message</p>
-            <p>dropdown for state</p>
-            <p>button for cancel</p>
-            <p>button for saving</p>
+            <p id="ticket_id">id</p>
+            <p id="ticket_user">show user</p>
+            <p id="ticket_subject">show subject</p>
+            <textarea id="ticket_message" cols="30" rows="10"></textarea>
+            <select id="ticket_state">
+                <option value="0">send</option>
+                <option value="1" selected>in progress</option>
+                <option value="2">done</option>
+                <option value="3">closed</option>
+            </select>
+            <button type="button" onclick="cancel()">Button for cancel</button>
+            <button type="button" onclick="save()">Button for saving</button>
+            <button type="button" onclick="_delete()">Button for delete</button>
         </form>
         <script src="./ticketEditor.js"></script>
     </body>

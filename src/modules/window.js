@@ -14,8 +14,9 @@ class Window extends BrowserWindow {
     constructor({ file, ...windowSettings }) {
         super({ ...defaultProps, ...windowSettings })
 
-        this.loadFile(file)
-        this.webContents.openDevTools()
+        this.loadURL(file)
+        //this.loadFile(file)
+        //this.webContents.openDevTools()
 
         this.once('ready-to-show', () => {
             this.show()
@@ -23,4 +24,4 @@ class Window extends BrowserWindow {
     }
 }
 
-module.exports = Window
+module.exports.Window = Window

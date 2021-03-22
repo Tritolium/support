@@ -3,21 +3,33 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
 const url='http://tritol.bplaced.net'
 
+var data
+
 function fetchData() {
     var http = new XMLHttpRequest()
     http.onreadystatechange = function () {
         if(this.readyState == 4) {
-            var data = JSON.parse(this.responseText)
+            data = JSON.parse(this.responseText)
             var disContainer = document.getElementById('table_body')
             disContainer.innerHTML = ""
             for(var i = 0; i < data.length; i++){
                 var tr = document.createElement('tr')
+
+                //sets element id based on ticket_id from server
+
+                tr.id = data[i].ticket_id;
+
+                //adds listener to the tablerow to open an editor on doubleclick
+                
+                tr.ondblclick = (e) => {
+                    let target_id = e.target.parentNode.id
+                    ipcRenderer.send('open_ticket_editor', {target_id})
+                }
                 var td_subject = document.createElement('td')
                 var td_message = document.createElement('td')
                 var td_active = document.createElement('td')
                 td_subject.innerHTML = data[i].subject
                 td_message.innerHTML = data[i].message
-                console.log(data[i].state)
                 switch(data[i].state){
                     case '0':
                         td_active.style.backgroundColor = 'yellow'
@@ -48,3 +60,4 @@ ipcRenderer.on('new_ticket', (evt) => {
 })
 
 fetchData()
+
