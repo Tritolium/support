@@ -51,7 +51,8 @@ function fetchData() {
             }
         }
     }
-    http.open("GET", url + '/api/ticket/read.php')
+    //http.open("GET", url + '/api/ticket/read.php')
+    http.open('GET', url + '/api/ticket.php')
     http.send()
 }
 

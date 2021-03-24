@@ -10,9 +10,21 @@ function main () {
     // create menu in toolbar
     tray = new Tray(require('path').join(__dirname,'support.png'))
     const contextMenu = Menu.buildFromTemplate([
-        { label: 'Anzeigen', type: 'normal', click: ViewHandler.openMainWindow},
-        { label: 'Melden', type: 'normal', click: ViewHandler.openReportDialog},
-        { label: 'Schließen', type: 'normal', click: quitApp}
+        {
+            label: 'Anzeigen',
+            type: 'normal',
+            click: ViewHandler.openMainWindow
+        },
+        {
+            label: 'Melden',
+            type: 'normal',
+            click: ViewHandler.openReportDialog
+        },
+        {
+            label: 'Schließen',
+            type: 'normal',
+            click: quitApp
+        }
     ])
     tray.setContextMenu(contextMenu)
     tray.setToolTip('Support')

@@ -30,7 +30,8 @@ function fetchData(){
             }
         }
     }
-    http.open("GET", url + '/api/ticket/read.php?ticket_id=' + ticket_id)
+    //http.open("GET", url + '/api/ticket/read.php?ticket_id=' + ticket_id)
+    http.open('GET', url + '/api/ticket.php?ticket_id=' + ticket_id)
     http.send()  
 }
 

@@ -51,8 +51,29 @@ module.exports.ViewHandler = {
                     ]
                 },
                 {
+                    label: 'Ticket',
+                    id: 'ticket_menu',
+                    submenu: [
+                        {
+                            label: 'Create',
+                            id: 'ticket_create',
+                            enabled: false,
+                            click() {
+                                require('./viewhandler').ViewHandler.openReportDialog()
+                            }
+                        }
+                    ]
+                },
+                {
                     label: 'App',
                     submenu: [
+                        {
+                            label: 'Close',
+                            click() {
+                                mainWindow.close()
+                                mainWindow = undefined
+                            }
+                        },
                         {
                             label: 'Quit',
                             click() {
@@ -70,7 +91,7 @@ module.exports.ViewHandler = {
                 file: require('path').join(__dirname, 'dialogs/index/index.html')
             })
             mainWindow.on('closed', () => {
-                mainWindow = null
+                mainWindow = undefined
             })
         } else {
             mainWindow.focus()
@@ -78,19 +99,23 @@ module.exports.ViewHandler = {
     },
 
     reloadMainWindow : function(){
-        if(mainWindow != null){
+        if(mainWindow != undefined){
             mainWindow.webContents.send('new_ticket')
         }
     },
-
+    /**
+     * Hides the login in the menu. Enables the ticketreport
+     */
     hideLogin : function(){
         Menu.getApplicationMenu().getMenuItemById('login').enabled = false
         Menu.getApplicationMenu().getMenuItemById('logout').enabled = true
+        Menu.getApplicationMenu().getMenuItemById('ticket_create').enabled = true
     },
 
     showLogin : function(){
         Menu.getApplicationMenu().getMenuItemById('login').enabled = true
         Menu.getApplicationMenu().getMenuItemById('logout').enabled = false
+        Menu.getApplicationMenu().getMenuItemById('ticket_create').enabled = false
     },
 
     // Report dialog

@@ -45,7 +45,8 @@ ipcMain.on('editor_save_fired', (evt, arg) => {
             }
         }
     }
-    http.open("PUT", url + '/api/ticket/update.php')
+    //http.open("PUT", url + '/api/ticket/update.php')
+    http.open('PUT', url + '/api/ticket.php')
     http.send(JSON.stringify({'ticket_id': arg.ticket_id, 'message': arg.message, 'state': arg.state}))
 })
 
@@ -57,7 +58,8 @@ ipcMain.on('editor_delete_fired', (evt, arg) => {
             ViewHandler.reloadMainWindow()
         }
     }
-    http.open("DELETE", url + '/api/ticket/delete.php')
+    //http.open("DELETE", url + '/api/ticket/delete.php')
+    http.open('DELETE', url + '/api/ticket.php')
     http.send(JSON.stringify({'ticket_id': arg.ticket_id}))
 })
 
@@ -71,7 +73,8 @@ ipcMain.on('report_fired', (evt, arg) => {
             console.log(this.responseText)
         }
     }
-    http.open("POST", url + '/api/ticket/create.php')
+    //http.open("POST", url + '/api/ticket/create.php')
+    http.open('POST', url + '/api/ticket.php')
     let outgoing = JSON.stringify({'name': require('./eventhandler').EventHandler.user.name, 'subject': arg.subject, 'message': arg.message})
     console.log(outgoing)
     http.send(outgoing)
